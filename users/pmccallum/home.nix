@@ -54,10 +54,10 @@
     git-crypt
     gnupg
     pinentry-gnome
-    libreoffice-fresh
     protonup-ng
     lutris
     heroic
+    onlyoffice-bin
   ];
 
   home.file = {
