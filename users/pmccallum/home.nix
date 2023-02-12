@@ -55,6 +55,7 @@
     gnupg
     steam
     pinentry-gnome
+    libreoffice-fresh
   ];
 
   home.file = {
