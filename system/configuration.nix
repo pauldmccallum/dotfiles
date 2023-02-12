@@ -81,6 +81,8 @@
       curl
       steam
       steam-run
+      cifs-utils
+      restic
  ]);
 
   # Enable ZSH
@@ -132,6 +134,31 @@
 
   # List services that you want to enable:
 
+  # Configure Restic Backup
+  services.restic.backups = {
+    remotebackup = {
+      initialize = true;
+      passwordFile = "/etc/nixos/secrets/restic-password";
+      repository = "s3:https://s3.ca-central-1.wasabisys.com/nixosbackup";
+      timerConfig = {
+        OnUnitActiveSec = "1d";
+      };
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 4"
+        "--keep-monthly 12"
+        "--keep-yearly 3"
+        ];
+      extraBackupArgs = [
+        "--include-file=/etc/nixos/restic-include"
+        "--exclude-file=/etc/nixos/restic-exclude"
+        ];
+      extraOptions = [
+      ];
+      environmentFile = "/etc/nixos/secrets/s3credentials"; 
+    };
+  };
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
@@ -175,4 +202,14 @@
     "/.snapshots".options = [ "compress=zstd:1" "noatime" ];
 };
 
+  # Mount CIFS share from server
+  fileSystems."/mnt/Backups" = {
+      device = "//10.75.20.12/thecjester";
+      fsType = "cifs";
+      options = let
+        # this line prevents hanging on network split
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+      in ["${automount_opts},vers=2.0,credentials=/etc/nixos/secrets/win-credentials,uid=1000,gid=1000"];
+  };
 }
