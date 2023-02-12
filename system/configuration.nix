@@ -12,6 +12,8 @@
 
   nixpkgs.config.allowUnfree = true; 
 
+  programs.steam.enable = true;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -76,6 +78,8 @@
       git
       neovim
       curl
+      steam
+      steam-run
  ]);
 
   # Enable ZSH
@@ -90,6 +94,10 @@
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+
+  # Enable bluetooth
+
+  hardware.bluetooth.enable = true;  
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;

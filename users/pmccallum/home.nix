@@ -53,9 +53,11 @@
     pcloud
     git-crypt
     gnupg
-    steam
     pinentry-gnome
     libreoffice-fresh
+    protonup-ng
+    lutris
+    heroic
   ];
 
   home.file = {
