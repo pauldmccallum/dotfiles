@@ -27,6 +27,13 @@
     pinentryFlavor = "gnome3";
   };
 
+  #systemd.users.timers = {
+  #  timer-name = {
+  #    Unit = {
+  #      Description = "Wasabi Billing";
+  #  }
+  #  Timer = {
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -58,6 +65,8 @@
     lutris
     heroic
     onlyoffice-bin
+    distrobox
+    webkitgtk
   ];
 
   home.file = {

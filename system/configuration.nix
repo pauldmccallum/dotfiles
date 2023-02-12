@@ -10,6 +10,18 @@
       ./hardware-configuration.nix
     ];
 
+  virtualisation = {
+    podman = {
+      enable = true;
+
+      # Create a `docker` alias for podman, to use it as a drop-in replacement
+      dockerCompat = true;
+
+      # Required for containers under podman-compose to be able to talk to each other.
+      defaultNetwork.dnsname.enable = true;
+    };
+  };
+
   nixpkgs.config.allowUnfree = true; 
 
   programs.steam.enable = true;
@@ -139,10 +151,21 @@
     remotebackup = {
       initialize = true;
       passwordFile = "/etc/nixos/secrets/restic-password";
-      repository = "s3:https://s3.ca-central-1.wasabisys.com/nixosbackup";
+      repository = "s3:https://s3.ca-central-1.wasabisys.com/clanbackup";
       timerConfig = {
-        OnUnitActiveSec = "1d";
+        OnCalendar = "*-*-* 14:30:00";
       };
+      paths = [
+        "/home/pmccallum/Backups"
+        "/home/pmccallum/bin"
+        "/home/pmccallum/Documents"
+        "/home/pmccallum/Pictures"
+        "/home/pmccallum/restic-backup"
+        "/home/pmccallum/.*"
+        "/home/pmccallum/.local/share/Steam/steamapps/compatdata"
+        "/mnt/Backups/pcloud\ sync"
+	"/etc/nixos/"
+      ];
       pruneOpts = [
         "--keep-daily 7"
         "--keep-weekly 4"
@@ -150,7 +173,7 @@
         "--keep-yearly 3"
         ];
       extraBackupArgs = [
-        "--include-file=/etc/nixos/restic-include"
+       # "--include-file=/etc/nixos/restic-include"
         "--exclude-file=/etc/nixos/restic-exclude"
         ];
       extraOptions = [
