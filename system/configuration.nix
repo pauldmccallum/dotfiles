@@ -25,7 +25,7 @@
 
   # Use the latest linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  #boot.initrd.kernelModules = ["amdgpu"];  
+  boot.initrd.kernelModules = ["amdgpu"];  
 
   # Set your time zone.
   time.timeZone = "America/Edmonton";
@@ -48,6 +48,7 @@
   services = {
     xserver = {
       enable = true;
+      videoDrivers = [ "amdgpu" ];
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;  
       layout = "us";  
@@ -96,11 +97,20 @@
   hardware.pulseaudio.enable = true;
 
   # Enable bluetooth
-
   hardware.bluetooth.enable = true;  
 
+  # Enable Vulkan
+  hardware.opengl.driSupport = true;
+  hardware.opengl.driSupport32Bit = true;
+
+  # Enable OpenCL
+  hardware.opengl.extraPackages = with pkgs; [
+  rocm-opencl-icd
+  rocm-opencl-runtime
+  ];
+
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.pmccallum = {
