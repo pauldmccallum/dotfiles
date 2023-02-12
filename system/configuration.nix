@@ -153,7 +153,7 @@
       passwordFile = "/etc/nixos/secrets/restic-password";
       repository = "s3:https://s3.ca-central-1.wasabisys.com/clanbackup";
       timerConfig = {
-        OnCalendar = "*-*-* 14:30:00";
+        OnCalendar = "*-*-* 15:00:00";
       };
       paths = [
         "/home/pmccallum/Backups"
@@ -173,7 +173,6 @@
         "--keep-yearly 3"
         ];
       extraBackupArgs = [
-       # "--include-file=/etc/nixos/restic-include"
         "--exclude-file=/etc/nixos/restic-exclude"
         ];
       extraOptions = [
