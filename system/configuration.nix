@@ -153,17 +153,10 @@
       passwordFile = "/etc/nixos/secrets/restic-password";
       repository = "s3:https://s3.ca-central-1.wasabisys.com/clanbackup";
       timerConfig = {
-        OnCalendar = "*-*-* 15:00:00";
+        OnCalendar = "*-*-* 10:01:00";
       };
       paths = [
-        "/home/pmccallum/Backups"
-        "/home/pmccallum/bin"
-        "/home/pmccallum/Documents"
-        "/home/pmccallum/Pictures"
-        "/home/pmccallum/restic-backup"
-        "/home/pmccallum/.*"
-        "/home/pmccallum/.local/share/Steam/steamapps/compatdata"
-        "/mnt/Backups/pcloud\ sync"
+        "/home/pmccallum"
 	"/etc/nixos/"
       ];
       pruneOpts = [
@@ -225,13 +218,13 @@
 };
 
   # Mount CIFS share from server
-  fileSystems."/mnt/Backups" = {
+  fileSystems."/home/pmccallum/mnt/backups" = {
       device = "//10.75.20.12/thecjester";
       fsType = "cifs";
       options = let
         # this line prevents hanging on network split
         automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
 
-      in ["${automount_opts},vers=2.0,credentials=/etc/nixos/secrets/win-credentials,uid=1000,gid=1000"];
+      in ["${automount_opts},vers=2.0,credentials=/etc/nixos/secrets/win-credentials,uid=1000,gid=0"];
   };
 }

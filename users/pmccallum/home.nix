@@ -27,12 +27,20 @@
     pinentryFlavor = "gnome3";
   };
 
-  #systemd.users.timers = {
-  #  timer-name = {
-  #    Unit = {
-  #      Description = "Wasabi Billing";
-  #  }
-  #  Timer = {
+  systemd.user.services.wasabi-billing = {
+      Unit = {
+        Description = "Wasabi Billing script";
+      };
+      Service = {
+        ExecStart = "/home/pmccallum/bin/wasabi-billing.sh";
+      };
+  };
+
+  systemd.user.timers.wasabi-billing = {
+    Timer = {
+      OnCalendar = "*-*-* 09:56:00";
+    };
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -67,6 +75,8 @@
     onlyoffice-bin
     distrobox
     webkitgtk
+    remmina
+    pokerth
   ];
 
   home.file = {
