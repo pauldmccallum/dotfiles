@@ -108,6 +108,8 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.avahi.enable = true;
+  services.printing.drivers = [pkgs.hplip];
 
   # Enable sound.
   sound.enable = true;
@@ -153,7 +155,7 @@
       passwordFile = "/etc/nixos/secrets/restic-password";
       repository = "s3:https://s3.ca-central-1.wasabisys.com/clanbackup";
       timerConfig = {
-        OnCalendar = "*-*-* 10:01:00";
+        OnCalendar = "*-*-* 0:00:00";
       };
       paths = [
         "/home/pmccallum"
@@ -166,7 +168,8 @@
         "--keep-yearly 3"
         ];
       extraBackupArgs = [
-        "--exclude-file=/etc/nixos/restic-exclude"
+        "--tag auto_snaphot"
+	"--exclude-file=/etc/nixos/restic-exclude"
         ];
       extraOptions = [
       ];

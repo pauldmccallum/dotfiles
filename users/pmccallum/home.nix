@@ -28,17 +28,26 @@
   };
 
   systemd.user.services.wasabi-billing = {
-      Unit = {
-        Description = "Wasabi Billing script";
-      };
-      Service = {
-        ExecStart = "/home/pmccallum/bin/wasabi-billing.sh";
-      };
+    Unit = {
+      Description = "Wasabi Billing script";
+    };
+    Service = {
+      Type = "oneshot";
+        ExecStart = "/bin/sh /home/pmccallum/bin/wasabi-billing.sh";
+	SuccessExitStatus = "0 1";
+    };
   };
 
   systemd.user.timers.wasabi-billing = {
+    Unit = {
+      Description = "Wasabi Billing script timer";
+    };
     Timer = {
-      OnCalendar = "*-*-* 09:56:00";
+      OnCalendar = "*-*-* 20:15";
+      Unit = "wasabi-billing.service";
+    };
+    Install = {
+      WantedBy = [ "timers.target" ];
     };
   };
 
@@ -77,6 +86,8 @@
     webkitgtk
     remmina
     pokerth
+    sil-q
+    htop
   ];
 
   home.file = {
