@@ -27,6 +27,28 @@
     pinentryFlavor = "gnome3";
   };
 
+  programs = {
+    neovim = {
+      enable = true;
+      withPython3 = true;
+      plugins = with pkgs.vimPlugins; [
+        coc-nvim
+	coc-pyright
+      ];
+      extraPackages = with pkgs; [
+        (python3.withPackages (ps: with ps; [
+	  black
+	  flake8
+        ]))
+      ];
+      extraPython3Packages = (ps: with ps; [
+        jedi
+      ]);
+    };
+  };
+  
+  xdg.configFile."nvim/coc-settings.json".text = builtins.readFile /home/pmccallum/.config/nvim/my-coc-settings.json;
+
   systemd.user.services.wasabi-billing = {
     Unit = {
       Description = "Wasabi Billing script";
@@ -43,7 +65,7 @@
       Description = "Wasabi Billing script timer";
     };
     Timer = {
-      OnCalendar = "*-*-* 20:15";
+      OnCalendar = "*-*-* 08:00";
       Unit = "wasabi-billing.service";
     };
     Install = {
@@ -88,6 +110,7 @@
     pokerth
     sil-q
     htop
+    nodejs
   ];
 
   home.file = {

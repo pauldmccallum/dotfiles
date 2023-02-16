@@ -155,7 +155,7 @@
       passwordFile = "/etc/nixos/secrets/restic-password";
       repository = "s3:https://s3.ca-central-1.wasabisys.com/clanbackup";
       timerConfig = {
-        OnCalendar = "*-*-* 0:00:00";
+        OnCalendar = "*-*-* 20:00:00";
       };
       paths = [
         "/home/pmccallum"
