@@ -101,6 +101,7 @@
     gnupg
     pinentry-gnome
     protonup-ng
+    protontricks
     lutris
     heroic
     onlyoffice-bin
@@ -111,7 +112,16 @@
     sil-q
     htop
     nodejs
+    asciiquarium
+    #wine
+    winetricks
+    #wineWowPackages.stable
+    #(wine.override { wineBuild = "wine64"; })
+    wineWowPackages.staging
+    evince
+    calibre
   ];
+
 
   home.file = {
     ".config/alacritty/alacritty.yaml".text = ''
