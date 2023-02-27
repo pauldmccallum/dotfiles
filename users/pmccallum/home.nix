@@ -94,7 +94,6 @@
     thonny
     qbittorrent
     crawlTiles
-    discord
     plata-theme
     pcloud
     git-crypt
@@ -113,13 +112,13 @@
     htop
     nodejs
     asciiquarium
-    #wine
     winetricks
-    #wineWowPackages.stable
-    #(wine.override { wineBuild = "wine64"; })
     wineWowPackages.staging
     evince
     calibre
+    gnome.gnome-terminal
+    terraria-server
+    tmux
   ];
 
 

@@ -17,6 +17,10 @@
     win-virtio
     win-spice
     gnome.adwaita-icon-theme
+    bridge-utils
+    guestfs-tools
+    libguestfs
+
   ];
 
   # Manage the virtualisation services

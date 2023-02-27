@@ -204,7 +204,9 @@
   zramSwap.enable = true;
   zramSwap.memoryPercent = 50;
 
-  # Automate cleaning the Nix store
+  # Automate cleaning and optimising the nix store
+  nix.settings.auto-optimise-store = true;
+
   nix.gc = {
       automatic = true;
       dates = "weekly";
